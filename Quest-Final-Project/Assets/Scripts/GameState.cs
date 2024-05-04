@@ -6,10 +6,16 @@ public class GameState : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public bool[] tasks;
+    [SerializeField] public ArrayList tasks = new ArrayList() { false, false};
 
-    public bool[] getTasks()
+    public ArrayList getTasks()
     {
         return tasks;
+    }
+
+    public void markTaskComplete(int i)
+    {
+        tasks[i] = true;
+        // Else do nothing, its invalid
     }
 }

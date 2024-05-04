@@ -8,6 +8,7 @@ public class CatControler : MonoBehaviour
     // Using code from the book for the patrolRoute
     public Transform patrolRoute;
 
+    // Locations will not be used anymore for this project
     public List<Transform> locations;
 
     private int loacationIndex = 0;
@@ -23,54 +24,38 @@ public class CatControler : MonoBehaviour
 
     // boolean to track if the pet has been fed a treat, after which they will start to follow the player
     public bool hasEaten;
+    public bool isSitting; 
 
     // Stopping distance for the navmesh 
     public float stoppingDistance; 
 
-    public GameManagerScript gameManagerScript;
+    //public GameManagerScript gameManagerScript;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        InitializePatrolRoute();
+        //InitializePatrolRoute();
 
-        MoveToNextPatrolLocation();
+        //MoveToNextPatrolLocation();
 
         anim = GetComponent<Animator>();
         anim.SetBool("isWalking", true);
+        agent.destination = player.transform.position;
+        agent.stoppingDistance = stoppingDistance;
+        isSitting = false;
+
 
         hasEaten = false;
     }
 
 
-    void InitializePatrolRoute()
-    {
-       
-        foreach (Transform child in patrolRoute)
-        {
-          
-            locations.Add(child);
-        }
-    }
-
-    void MoveToNextPatrolLocation()
-    {
-        if (locations.Count == 0) return;
-        agent.destination = locations[loacationIndex].position;
-        loacationIndex = (loacationIndex + 1) % locations.Count;
-    }
-
     private void Update()
     {
-        if (hasEaten)
+        if(!isSitting)
         {
-            agent.destination = player.transform.position;
-            agent.stoppingDistance = stoppingDistance;
+            anim.SetBool("isWalking", true);
 
-        }
-        else if (agent.remainingDistance < 0.2f && !agent.pathPending && !playerInSphere)
-        {
-            MoveToNextPatrolLocation();
+            agent.destination = player.transform.position;
         }
 
     }
@@ -84,38 +69,31 @@ public class CatControler : MonoBehaviour
             anim.SetBool("isSitting", true);
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
+            isSitting = true;
+            
         }
 
     }
     public void OnTriggerExit(Collider other)
     {
+        anim.SetBool("isWalking", true);
+
         if (other.gameObject.CompareTag("Player"))
         {
-            // bit of code to make it so the cat will follow the player after its eaten.
+            // bit of code to make it so the cat will follow the player.
             playerInSphere = false;
-            if (!hasEaten)
-            {
-                agent.isStopped = false;
-                anim.SetBool("isSitting", false);
-                anim.SetBool("isWalking", true);
-                MoveToNextPatrolLocation();
-            }
-            else
-            {
-                agent.isStopped = false;
-                anim.SetBool("isSitting", false);
-                anim.SetBool("isWalking", true);
-                agent.destination = player.transform.position;
-                agent.stoppingDistance = stoppingDistance;
 
-            }
+            agent.isStopped = false;
+            anim.SetBool("isSitting", false);
+            agent.destination = player.transform.position;
+            isSitting=false;
         }
     }
     // Method for use in the treat script
     public void eatTreat()
     {
         hasEaten = true;
-        gameManagerScript.quests[1] = true; 
+        //gameManagerScript.quests[1] = true; 
     }
 
 

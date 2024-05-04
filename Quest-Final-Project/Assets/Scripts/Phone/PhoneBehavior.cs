@@ -12,6 +12,8 @@ public class PhoneBehavior : MonoBehaviour
     public int pickupAttempts;
     public OVRGrabbable grabbable;
 
+    public GameState gameState;
+
     public bool isDropping;
 
     public void Start()
@@ -25,11 +27,19 @@ public class PhoneBehavior : MonoBehaviour
     {
         if(grabbable.isGrabbed && !isDropping)
         {
-            isDropping = true;
-            StartCoroutine(dropPhone(pickupAttempts + 1));
-            pickupAttempts++;
+            if (pickupAttempts < 4)
+            {
+                isDropping = true;
+                StartCoroutine(dropPhone(pickupAttempts + 1));
+                pickupAttempts++;
+            }
+            else
+            {
+                gameState.markTaskComplete(1);
+            }
             
         }
+
     }
 
 

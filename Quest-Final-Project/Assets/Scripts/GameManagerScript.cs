@@ -5,12 +5,14 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
 
-    public ArrayList quests = new ArrayList() { false, false, false };
+    public ArrayList quests = new ArrayList() { false };
 
     public void Start()
     {
         DontDestroyOnLoad(this.gameObject);
 
     }
+
+
 
 }
