@@ -9,6 +9,7 @@ TagManager:
   - Cat
   - CatEat
   - PlayerHand
+  - Trash
   layers:
   - Default
   - TransparentFX

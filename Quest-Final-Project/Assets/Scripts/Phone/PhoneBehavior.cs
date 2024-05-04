@@ -12,11 +12,27 @@ public class PhoneBehavior : MonoBehaviour
     public int pickupAttempts;
     public OVRGrabbable grabbable;
 
+    public bool isDropping;
+
     public void Start()
     {
         pickupCount = 0;
         grabbable = GetComponent<OVRGrabbable>();
+        isDropping = false;
     }
+
+    public void Update()
+    {
+        if(grabbable.isGrabbed && !isDropping)
+        {
+            isDropping = true;
+            StartCoroutine(dropPhone(pickupAttempts + 1));
+            pickupAttempts++;
+            
+        }
+    }
+
+
 
 
     // So the point of this will be to manage the dropping of the phone, it will take i which will be the pickup count
@@ -27,6 +43,7 @@ public class PhoneBehavior : MonoBehaviour
         yield return new WaitForSeconds(i * dropMult);
         // After the time limit, make the phone drop
         grabbable.grabbedBy.ForceRelease(grabbable);
+        isDropping = false;
 
     }
 
