@@ -16,6 +16,8 @@ public class PhoneBehavior : MonoBehaviour
 
     public bool isDropping;
 
+    public bool testDone = false; 
+
     public void Start()
     {
         pickupCount = 0;
@@ -39,6 +41,11 @@ public class PhoneBehavior : MonoBehaviour
             }
             
         }
+        if (testDone)
+        {
+            gameState.markTaskComplete(1);
+        }
+
 
     }
 

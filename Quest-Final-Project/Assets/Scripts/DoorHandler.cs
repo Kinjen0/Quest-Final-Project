@@ -21,25 +21,11 @@ public class DoorHandler : MonoBehaviour
     void Update()
     {
         // First we will check if all of the tasks are complete' This should let me just add more tasks later on
-        if(checkDoor())
+        if(gameManager.checkAllComplete())
         {
             doorAnimator.Play("Opening");
             doorBlocker.gameObject.SetActive(false);
         }
     }
-    // Function to check the door state
-    private bool checkDoor()
-    {
-        tasks = gameManager.getTasks();
 
-        foreach (bool task in tasks)
-        {
-            //Debug.Log(task);
-            if(task == false)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
 }

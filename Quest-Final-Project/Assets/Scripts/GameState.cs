@@ -6,11 +6,24 @@ public class GameState : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] public ArrayList tasks = new ArrayList() { false, false};
+    public ArrayList tasks = new ArrayList() { false, false};
 
     public ArrayList getTasks()
     {
         return tasks;
+    }
+
+    public bool checkAllComplete()
+    {
+        foreach (bool task in tasks)
+        {
+            //Debug.Log(task);
+            if (task == false)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void markTaskComplete(int i)
