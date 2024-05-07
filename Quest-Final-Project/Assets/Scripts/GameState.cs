@@ -6,7 +6,7 @@ public class GameState : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public ArrayList tasks = new ArrayList() { false, false};
+    public ArrayList tasks = new ArrayList() { false, false, false};
 
     public ArrayList getTasks()
     {

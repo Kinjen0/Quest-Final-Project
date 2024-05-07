@@ -11,18 +11,27 @@ public class TrashManager : MonoBehaviour
     public GameState gameState;
     public int trashCount = 0;
 
+    public void Update()
+    {
+        if (trashCount >= 8)
+        {
+            gameState.markTaskComplete(0);
+        }
+    }
 
 
     public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Trash")
         {
-            StartCoroutine(DestroyTrash(other.gameObject));
+            Trash trash = other.GetComponent<Trash>();
+            if (!trash.isTrashed)
+            {
+                trash.isTrashed = true;
+                StartCoroutine(DestroyTrash(other.gameObject));
+            }
         }
-        if(trashCount > 3)
-        {
-            gameState.markTaskComplete(0);
-        }
+
     }
 
     // Script to destroy the trash object after 3 seconds, To prevent the trash can from being overfilled. 

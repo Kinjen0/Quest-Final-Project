@@ -10,6 +10,7 @@ TagManager:
   - CatEat
   - PlayerHand
   - Trash
+  - Plate
   layers:
   - Default
   - TransparentFX
