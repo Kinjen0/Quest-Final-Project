@@ -8,8 +8,9 @@ public class PhoneBehavior : MonoBehaviour
 {
     // Counter for the number of current attempts to pickup the phone.
     public int pickupCount;
-    // The number of attempts to pick up the object we want to have. 
+    // The number of attempts to pick up the object we want to have. Can be set in inspector
     public int pickupAttempts;
+
     public OVRGrabbable grabbable;
 
     public GameState gameState;
@@ -29,11 +30,10 @@ public class PhoneBehavior : MonoBehaviour
     {
         if(grabbable.isGrabbed && !isDropping)
         {
-            if (pickupAttempts < 3)
+            if (pickupCount < pickupAttempts)
             {
                 isDropping = true;
-                pickupAttempts++;
-                StartCoroutine(dropPhone(pickupAttempts + 1));
+                pickupCount++;
             }
             else
             {
@@ -49,6 +49,16 @@ public class PhoneBehavior : MonoBehaviour
 
     }
 
+    // I got some help from this source to manage only having a single coroutine at once
+    //https://forum.unity.com/threads/ensure-that-theres-only-one-instance-of-a-coroutine-per-gameobject.545947/
+    // and later https://docs.unity3d.com/ScriptReference/MonoBehaviour.StopAllCoroutines.html#:~:text=However%2C%20StopAllCoroutines%20is%20used%20to,on%20a%20script%20are%20stopped.
+
+    public void startDropPhone()
+    {
+        StopAllCoroutines();
+        StartCoroutine(dropPhone(pickupAttempts + 1));
+
+    }
 
 
 
@@ -59,7 +69,12 @@ public class PhoneBehavior : MonoBehaviour
         //int dropMult = 2;
         yield return new WaitForSeconds(i);
         // After the time limit, make the phone drop
-        grabbable.grabbedBy.ForceRelease(grabbable);
+        // Have a check to make sure that the phone is still being grabbed
+        if (grabbable.isGrabbed)
+        {
+            grabbable.grabbedBy.ForceRelease(grabbable);
+
+        }
         isDropping = false;
 
     }
