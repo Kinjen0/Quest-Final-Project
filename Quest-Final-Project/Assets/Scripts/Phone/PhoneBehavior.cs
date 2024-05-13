@@ -29,11 +29,11 @@ public class PhoneBehavior : MonoBehaviour
     {
         if(grabbable.isGrabbed && !isDropping)
         {
-            if (pickupAttempts < 4)
+            if (pickupAttempts < 3)
             {
                 isDropping = true;
-                StartCoroutine(dropPhone(pickupAttempts + 1));
                 pickupAttempts++;
+                StartCoroutine(dropPhone(pickupAttempts + 1));
             }
             else
             {
@@ -55,9 +55,9 @@ public class PhoneBehavior : MonoBehaviour
     // So the point of this will be to manage the dropping of the phone, it will take i which will be the pickup count
     IEnumerator dropPhone(int i)
     { 
-        // Multiplier to handle each attempt taking longer to drop it. 
-        int dropMult = 2;
-        yield return new WaitForSeconds(i * dropMult);
+        // (REMOVED) Multiplier to handle each attempt taking longer to drop it. 
+        //int dropMult = 2;
+        yield return new WaitForSeconds(i);
         // After the time limit, make the phone drop
         grabbable.grabbedBy.ForceRelease(grabbable);
         isDropping = false;
