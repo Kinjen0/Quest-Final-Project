@@ -9,34 +9,45 @@ public class PhoneBehavior : MonoBehaviour
     // Counter for the number of current attempts to pickup the phone.
     public int pickupCount;
     // The number of attempts to pick up the object we want to have. Can be set in inspector
-    public int pickupAttempts;
+    public int NumberOfPickupAttempts;
 
     public OVRGrabbable grabbable;
 
+    // GameState manager to allow us to mark the task as completed. Set in inspector. 
     public GameState gameState;
+
+    // AudioSource for the ringtone
+    private AudioSource ringtone; 
 
     public bool isDropping;
 
-    public bool testDone = false; 
+    // Boolean to let me test the completion of the task 
+    public bool testDone = false;
+
+    // Bool to let me keep track of if the song has been played
+    private bool hasPlayed = false;
 
     public void Start()
     {
         pickupCount = 0;
         grabbable = GetComponent<OVRGrabbable>();
         isDropping = false;
+        ringtone = GetComponent<AudioSource>();
     }
 
     public void Update()
     {
         if(grabbable.isGrabbed && !isDropping)
         {
-            if (pickupCount < pickupAttempts)
+            if (pickupCount < NumberOfPickupAttempts)
             {
                 isDropping = true;
                 pickupCount++;
+                startDropPhone();
             }
             else
             {
+                PlayPhoneSound();
                 gameState.markTaskComplete(1);
             }
             
@@ -56,7 +67,7 @@ public class PhoneBehavior : MonoBehaviour
     public void startDropPhone()
     {
         StopAllCoroutines();
-        StartCoroutine(dropPhone(pickupAttempts + 1));
+        StartCoroutine(dropPhone(pickupCount + 1));
 
     }
 
@@ -77,6 +88,16 @@ public class PhoneBehavior : MonoBehaviour
         }
         isDropping = false;
 
+    }
+
+    // Playing the phone sound exactly one time
+    private void PlayPhoneSound()
+    {
+        if(!hasPlayed)
+        {
+            hasPlayed = true;
+            ringtone.Play();
+        }
     }
 
     

@@ -11,6 +11,8 @@ TagManager:
   - PlayerHand
   - Trash
   - Plate
+  - Water
+  - FaucetEffect
   layers:
   - Default
   - TransparentFX

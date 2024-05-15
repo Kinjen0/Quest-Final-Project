@@ -2,6 +2,7 @@ Music:
 
 https://pixabay.com/music/modern-classical-song-from-a-secret-garden-sad-piano-205576/
 https://pixabay.com/music/modern-classical-sad-piano-one-181090/
+https://pixabay.com/music/video-games-8-bit-game-158815/
 
 I got the cieling fan from this page
 https://www.cgtrader.com/free-3d-models/household/other/wooden-ceiling-fan-3d-model
@@ -9,3 +10,9 @@ https://www.cgtrader.com/free-3d-models/household/other/wooden-ceiling-fan-3d-mo
 
 
 https://docs.unity3d.com/ScriptReference/Behaviour-enabled.html
+
+Phone sound effect came from here
+https://pixabay.com/sound-effects/ringing-151670/
+
+Used this to get the faucet animation to stop. 
+https://filmora.wondershare.com/animation-tips/unity-stop-animation.html#:~:text=Go%20to%20the%20animation%20folder,corner%20of%20the%20Unity%20panel.
